@@ -4,21 +4,21 @@ import permutations
 type
   TBoard* = object
     size: int
-    rows: seq[seq[int]]
+    rows: seq[seq[char]]
     queens: seq[seq[int]]
   Board = ref TBoard
 
 
-proc initialize_board(board: Board, n:int):seq[seq[int]]=
+proc initialize_board(board: Board, n:int):seq[seq[char]]=
   var queens = 1
   board.queens = @[]
   result = @[]
   for i in 1..n:
-    var column:seq[int] = @[]
+    var column:seq[char] = @[]
     for j in 1..n:
       var add_queen = j == i and j == queens
-      column.add(if add_queen: 1
-                 else: 0)
+      column.add(if add_queen: 'Q'
+                 else: '-')
       if add_queen:
         board.queens.add(@[i-1,j-1])
         queens += 1
@@ -41,9 +41,9 @@ proc solved(b:Board):bool=
 
 proc set_queen(b:Board, row, col: int):void=
   var queen = addr(b.queens[row])
-  b.rows[queen[0]][queen[1]] = 0
+  b.rows[queen[0]][queen[1]] = '-'
   queen[1] = col
-  b.rows[queen[0]][queen[1]] = 1
+  b.rows[queen[0]][queen[1]] = 'Q'
 
 
 proc dup(b:Board):Board=
@@ -52,7 +52,7 @@ proc dup(b:Board):Board=
   result.rows = b.rows
 
 proc print*(b:Board):void=
-  var rows = b.rows.map do (row:seq[int]) -> string:
+  var rows = b.rows.map do (row:seq[char]) -> string:
     $row
   echo join(rows, "\n")
 

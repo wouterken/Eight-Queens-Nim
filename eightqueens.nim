@@ -12,7 +12,10 @@ for size in 2..9:
       b.set_queen(row, col)
     if b.solved:
       solutions += 1
-      stdout.write "\rBoard size: " & $size & " Found " & $solutions & " solutions"
+      if solutions == 1:
+        b.print
+      stdout.write "\rFound " & $solutions & " solutions"
+
   echo if solutions > 0: "" else: "no solutions"
 
 
