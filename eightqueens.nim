@@ -1,7 +1,7 @@
 include Board
 
 for size in 2..9:
-  echo "Testing board size: " & $size
+  echo "" & $size & "x" & $size
   var rows:seq[int] = @[]
   for i in 0..size-1: rows.add(i)
 
@@ -10,6 +10,9 @@ for size in 2..9:
     var b:Board = newBoard(size)
     for col, row in pairs(swaps):
       b.set_queen(row, col)
-    if b.solved: solutions += 1
+    if b.solved:
+      solutions += 1
+      stdout.write "\rBoard size: " & $size & " Found " & $solutions & " solutions"
+  echo if solutions > 0: "" else: "no solutions"
 
-  echo "Found " & $solutions & " solutions"
+
